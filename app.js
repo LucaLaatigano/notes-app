@@ -21,6 +21,7 @@ function createNote(container, name, date) {
     deleteBtn.classList.add("deleted")
     const editBtn = document.createElement("button")
     editBtn.textContent ="✏️"
+    editBtn.classList.add("edit")
 
     nameAndDate.appendChild(createdName)
     nameAndDate.appendChild(dateContent)
@@ -53,6 +54,9 @@ function deleteAnote(dBtn){
     });
     
 }
+function editNote(title){
+    console.log(title)
+}
 
 createBtn.addEventListener("click", () =>{
     noteName.value = ""
@@ -73,6 +77,19 @@ create.addEventListener("click", () => {
     createNote(noteDiv, name, newDate)
     const deleteBtnFromNotes = document.querySelectorAll(".deleted")
     deleteAnote(deleteBtnFromNotes)
+
+    const editBtnFromNotes = document.querySelectorAll(".edit")
+    editBtnFromNotes.forEach((ediBtn)=>{
+        const newEditBtnWithoutPastEvents = ediBtn.cloneNode(true)
+        ediBtn.replaceWith(newEditBtnWithoutPastEvents)
+        newEditBtnWithoutPastEvents.addEventListener("click", (e) => {
+            if(e.target.classList.contains("edit")){
+                const container = e.target.closest(".note")
+                const title = container.querySelector("h3")
+                editNote(title)
+            }
+        })
+    })
 })
 
 
@@ -80,6 +97,3 @@ const backBtn = document.getElementById("backBtn")
 backBtn.addEventListener("click", () =>{
     createDiv.style.display = "none"
 })
-
-
-console.log(notes)
