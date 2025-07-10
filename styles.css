@@ -1,0 +1,75 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#main-div{
+    margin-top: 100px;
+    width: 600px;
+    height: 600px;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    padding-top: 0;
+    border-radius: 15px;
+}
+
+#navegation{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding-top: 20px;
+}
+
+#input-el{
+    width: 400px;
+    height: 45px;
+    border-radius: 20px;
+    border: 1px solid black;
+    padding: 5px 5px 5px 10px;
+    transition: transform 0.3 ease;
+}
+
+button{
+    height: 45px;
+    width: 40px;
+    border-radius: 15px;
+    background-color: white;
+    border: 1px solid black;
+    transition: transform 0.3 ease;
+    cursor: pointer;
+}
+
+#create-btn{
+    font-size: 30px;
+    font-weight: lighter;
+}
+
+#close-notes{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#notes{
+    width: 550px;
+    height: 500px;
+    border: 1px solid black;
+    margin-top: 15px;
+}
+
+button:hover{
+    transform: scale(1.1);
+}
+input:hover{
+    transform: scale(1.010);
+}
