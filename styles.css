@@ -8,17 +8,19 @@ body{
     display:flex;
     justify-content: center;
     align-items: center;
+    background-color: black;
 }
 
 #main-div{
     margin-top: 50px;
     width: 800px;
     height: 800px;
-    border: 1px solid black;
+    border: 8px solid #101010;
     display: flex;
     flex-direction: column;
     padding-top: 0;
     border-radius: 15px;
+    background-color: black;
 }
 
 #navegation{
@@ -37,6 +39,7 @@ input{
     border: 1px solid black;
     padding: 5px 5px 5px 20px;
     font-size: 25px;
+    background-color: #101010;
     transition: transform 0.3 ease;
 }
 
@@ -44,7 +47,8 @@ button{
     height: 45px;
     width: 60px;
     border-radius: 15px;
-    background-color: white;
+    background-color: #101010;
+    font-size: 18px;
     border: 1px solid black;
     transition: transform 0.3 ease;
     cursor: pointer;
@@ -65,6 +69,7 @@ button{
     position: relative;
     display: flex;
     flex-direction: column;
+    gap: 35px;
     width: 725px;
     height: 675px;
     border: 1px solid black;
@@ -75,30 +80,37 @@ button{
 #message{
     width: 450px;
     height: 250px;
-    border: 1px solid black;
+    border: 5px solid #101010;
     position: absolute;
     top: 20%;
     left: 20%;
     display: none;
     flex-direction: column;
     gap: 20px;
-    background-color: white;
+    background-color: black;
 }
 #message input{
     width: 350px;
     margin-top: 20px;
     margin-left: 45px;
+    color: white;
 }
 #message button{
     margin-left: 140px;
     width: 150px;
     font-size: 20px;
+    color: white;
 }
 .note{
     margin: 10px 0 0 10px;
+    display: flex;
+    flex-direction: column;
     width: 700px;
     height: 80px;
     border: 1px solid black;
+    color:white;
+    background-color: #101010;
+    border-radius: 10px;
 }
 .note-name{
     font-size: 35px;
@@ -109,6 +121,9 @@ button{
     font-size: 25px;
 }
 
+#div-buttons-note{
+    margin-left: 10px;
+}
 
 
 button:hover{
