@@ -61,10 +61,18 @@ button{
 }
 
 #notes{
+    display: flex;
+    flex-direction: column;
     width: 550px;
     height: 500px;
     border: 1px solid black;
     margin-top: 15px;
+}
+
+#note{
+    width: 50px;
+    height: 50px;
+    border: 1px solid black;
 }
 
 button:hover{
