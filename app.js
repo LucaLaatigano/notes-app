@@ -2,6 +2,9 @@ const createBtn = document.getElementById("create-btn")
 const noteDiv = document.getElementById("notes")
 const createDiv = document.getElementById("message")
 const noteName = document.getElementById("note-name")
+const navSection = document.getElementById("navegation")
+const navDiv = document.getElementById("contains-nav")
+const textArea = document.getElementById("close-notes")
 const notes = []
 function createNote(container, name, date) {
     const note = document.createElement("div")
@@ -55,12 +58,53 @@ function deleteAnote(dBtn){
     
 }
 function editNote(title){
-    console.log(title)
+    const cssWholeStyle = window.getComputedStyle(navSection)
+    const activeNotes = window.getComputedStyle(noteDiv)
+    if(cssWholeStyle.display === "flex" && activeNotes.display === "flex"){
+        navSection.style.display = "none"
+        noteDiv.style.display = "none"
+    } 
+    const noteTitle = document.createElement("h3")
+    noteTitle.textContent = title
+    noteTitle.style.fontSize = "50px"
+    noteTitle.style.margin = "20px 0 15px 20px"
+    noteTitle.style.color = "white"
+    noteTitle.classList.add("titleSet")
+    const placeToWrite = document.createElement("textarea")
+    placeToWrite.name = "note"
+    placeToWrite.classList.add("place-to-write")
+
+    const container = document.createElement("div");
+    container.id = "buttonss";
+    container.style.display = "flex";
+    container.style.gap = "10px"; 
+    container.style.justifyContent = "center"; 
+    container.style.marginTop = "20px"; 
+    
+    const backBtn = document.createElement("button");
+    backBtn.textContent = "Back";
+    backBtn.classList.add("backBtn");
+    
+    const saveBtn = document.createElement("button");
+    saveBtn.classList.add("hola");
+    saveBtn.textContent = "Saved Changes";
+    
+    
+    container.appendChild(saveBtn);
+    container.appendChild(backBtn);
+    
+    
+    
+    textArea.appendChild(placeToWrite)
+    textArea.appendChild(container)
+    navDiv.appendChild(noteTitle)
+    goBack()
 }
 
 createBtn.addEventListener("click", () =>{
     noteName.value = ""
     createDiv.style.display = "flex"
+    goBack()
 })
 
 const create = document.getElementById("createBtn")
@@ -86,14 +130,36 @@ create.addEventListener("click", () => {
             if(e.target.classList.contains("edit")){
                 const container = e.target.closest(".note")
                 const title = container.querySelector("h3")
-                editNote(title)
+                const h3Title = title.textContent
+                editNote(h3Title)
             }
         })
     })
 })
 
-
-const backBtn = document.getElementById("backBtn")
-backBtn.addEventListener("click", () =>{
-    createDiv.style.display = "none"
-})
+function goBack(){
+    const backBtn = document.querySelectorAll(".backBtn")
+    backBtn.forEach((buttonPressed)=>{
+        buttonPressed.addEventListener("click", (e)=>{
+            const noteDiplayNone = window.getComputedStyle(noteDiv)
+            const navDisplatNone = window.getComputedStyle(navSection)
+            if(noteDiplayNone.display === "none" && navDisplatNone.display === "none" && document.querySelectorAll(".titleSet")){
+                document.querySelectorAll(".titleSet").forEach(title => {
+                    title.remove();
+                });
+                document.querySelectorAll(".place-to-write").forEach(area => {
+                    area.remove()
+                })
+                const btnContainer = document.getElementById("buttonss")
+                if(btnContainer){
+                    btnContainer.remove()
+                }
+                noteDiv.style.display = "flex"
+                navSection.style.display = "flex"                
+            } else{
+                console.log("no entro al div chie")
+            }
+            createDiv.style.display = "none"
+        })
+    })
+}
