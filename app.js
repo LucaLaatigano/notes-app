@@ -6,6 +6,9 @@ const navSection = document.getElementById("navegation")
 const navDiv = document.getElementById("contains-nav")
 const textArea = document.getElementById("close-notes")
 const notes = []
+
+
+
 function createNote(container, name, date) {
     const note = document.createElement("div")
     const nameAndDate = document.createElement("div")
@@ -36,6 +39,10 @@ function createNote(container, name, date) {
     note.appendChild(buttons)
 
     container.appendChild(note) 
+    /*notes.push({
+        name: name,
+        date: newDate
+    })*/
 }
 
 function deleteAnote(dBtn){
@@ -47,8 +54,11 @@ function deleteAnote(dBtn){
         newButtonWithoutPastEvents.addEventListener("click", (e)=>{
             if(e.target.classList.contains("deleted")){
                 const noteAboutToBeRemoved = e.target.closest(".note")
+                const titleOfTheNoteAboutTobeRemoved = noteAboutToBeRemoved.querySelector("h3").textContent
+                console.log(titleOfTheNoteAboutTobeRemoved)
                 if(noteAboutToBeRemoved && noteDiv && noteDiv.contains(noteAboutToBeRemoved)){
                     noteDiv.removeChild(noteAboutToBeRemoved)
+                    localStorage.removeItem(`note-${titleOfTheNoteAboutTobeRemoved}`)
                 } else{
                     console.log("no papa eligio la incorrecta")
                 }
@@ -70,35 +80,67 @@ function editNote(title){
     noteTitle.style.margin = "20px 0 15px 20px"
     noteTitle.style.color = "white"
     noteTitle.classList.add("titleSet")
-    const placeToWrite = document.createElement("textarea")
-    placeToWrite.name = "note"
-    placeToWrite.classList.add("place-to-write")
+    const placeToWrite = document.createElement("textarea");
+    placeToWrite.name = "note";
+    placeToWrite.classList.add("place-to-write");
 
+    const content = getContent(title);
+    placeToWrite.value = content;
+
+    console.log("Textarea value set to:", placeToWrite.value);
+
+    textArea.appendChild(placeToWrite);
     const container = document.createElement("div");
     container.id = "buttonss";
     container.style.display = "flex";
     container.style.gap = "10px"; 
     container.style.justifyContent = "center"; 
     container.style.marginTop = "20px"; 
-    
+        
     const backBtn = document.createElement("button");
     backBtn.textContent = "Back";
     backBtn.classList.add("backBtn");
-    
+        
     const saveBtn = document.createElement("button");
-    saveBtn.classList.add("hola");
+    saveBtn.classList.add("saveBtn");
     saveBtn.textContent = "Saved Changes";
-    
-    
+        
+        
     container.appendChild(saveBtn);
     container.appendChild(backBtn);
-    
-    
-    
+        
+        
+        
     textArea.appendChild(placeToWrite)
     textArea.appendChild(container)
     navDiv.appendChild(noteTitle)
+        
+    let save = document.querySelector(".saveBtn")
+    const writeArea = document.querySelector(".place-to-write")
+    save.addEventListener("click", ()=>{
+        saveText(writeArea)
+    })
+    
+    
+    
     goBack()
+    
+}
+
+function saveText(content){
+    const noteTitleElement = document.querySelector(".titleSet");
+    if (!noteTitleElement) {
+        return;
+    }
+    const noteTitle = noteTitleElement.textContent.trim();
+    if (noteTitle && content) {
+        localStorage.setItem(`note-${noteTitle}`, content.value);
+    } 
+}
+
+function getContent(title) {
+    const content = localStorage.getItem(`note-${title}`);
+    return content !== null ? content : "";
 }
 
 createBtn.addEventListener("click", () =>{
@@ -109,33 +151,40 @@ createBtn.addEventListener("click", () =>{
 
 const create = document.getElementById("createBtn")
 create.addEventListener("click", () => {
-    if(createDiv.style.display === "flex"){
-        createDiv.style.display = "none"
+    if (createDiv.style.display === "flex") {
+        createDiv.style.display = "none";
     }
-    const name = noteName.value
-    const date = new Date()
-    const dateTrimed = date.toString().split(" ")
-    const newDate = `${dateTrimed[1]}  ${dateTrimed[2]}  ${dateTrimed[3]}  ${dateTrimed[4]}`
-    
-    notes.push(name)
-    createNote(noteDiv, name, newDate)
-    const deleteBtnFromNotes = document.querySelectorAll(".deleted")
-    deleteAnote(deleteBtnFromNotes)
+    const name = noteName.value.trim();
+    if (!name) {
+        console.log("❌ El nombre de la nota no puede estar vacío");
+        return;
+    }
 
-    const editBtnFromNotes = document.querySelectorAll(".edit")
-    editBtnFromNotes.forEach((ediBtn)=>{
-        const newEditBtnWithoutPastEvents = ediBtn.cloneNode(true)
-        ediBtn.replaceWith(newEditBtnWithoutPastEvents)
+    const date = new Date();
+    const dateTrimed = date.toString().split(" ");
+    const newDate = `${dateTrimed[1]}  ${dateTrimed[2]}  ${dateTrimed[3]}  ${dateTrimed[4]}`;
+
+    notes.push(name);
+    createNote(noteDiv, name, newDate);
+    localStorage.setItem(`note-${name}`, ""); // Guarda vacía al crear
+
+    const deleteBtnFromNotes = document.querySelectorAll(".deleted");
+    deleteAnote(deleteBtnFromNotes);
+
+    const editBtnFromNotes = document.querySelectorAll(".edit");
+    editBtnFromNotes.forEach((ediBtn) => {
+        const newEditBtnWithoutPastEvents = ediBtn.cloneNode(true);
+        ediBtn.replaceWith(newEditBtnWithoutPastEvents);
         newEditBtnWithoutPastEvents.addEventListener("click", (e) => {
-            if(e.target.classList.contains("edit")){
-                const container = e.target.closest(".note")
-                const title = container.querySelector("h3")
-                const h3Title = title.textContent
-                editNote(h3Title)
+            if (e.target.classList.contains("edit")) {
+                const container = e.target.closest(".note");
+                const title = container.querySelector("h3");
+                const h3Title = title.textContent;
+                editNote(h3Title);
             }
-        })
-    })
-})
+        });
+    });
+});
 
 function goBack(){
     const backBtn = document.querySelectorAll(".backBtn")
