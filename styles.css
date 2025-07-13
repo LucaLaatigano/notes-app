@@ -31,6 +31,11 @@ body{
     gap: 20px;
     padding-top: 20px;
 }
+#title-page{
+    color: white;
+    font-size: 50px;
+    margin-right: 450px;
+}
 
 input{
     width: 600px;
@@ -162,9 +167,9 @@ button{
 
 #buttonss button {
     color: white;
-    width: 150px; /* Ajusta según necesites */
+    width: 150px; 
     height: 60px;
-    margin: 0 !important; /* Elimina márgenes inconsistentes */
+    margin: 0 !important;
 }
 button:hover{
     transform: scale(1.1);
