@@ -189,7 +189,6 @@ create.addEventListener("click", () => {
     }
     const name = noteName.value.trim();
     if (!name) {
-        console.log("❌ El nombre de la nota no puede estar vacío");
         return;
     }
 
@@ -238,9 +237,7 @@ function goBack(){
                 }
                 noteDiv.style.display = "flex"
                 navSection.style.display = "flex"                
-            } else{
-                console.log("no entro al div chie")
-            }
+            } 
             createDiv.style.display = "none"
         })
     })
@@ -278,3 +275,4 @@ window.addEventListener("load", () => {
     });
 });
 
+/*last check finished*/
